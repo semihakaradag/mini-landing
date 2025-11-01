@@ -1,0 +1,51 @@
+.hero {
+  padding: 72px 0 56px;
+  background: transparent;
+  color: var(--text);
+}
+
+.content {
+  display: grid;
+  gap: 16px;
+  text-align: center;
+  justify-items: center;
+}
+.content h1 {
+  font-size: clamp(28px, 6vw, 56px);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: var(--fs-lg);
+  max-width: 56ch;
+  margin: 0 auto;
+}
+
+.cta {
+  display: flex;
+  gap: 12px;
+   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px dashed var(--muted);
+  width: max-content;
+  margin: 0 auto;
+}
+
+@media (min-width: 1025px) {
+  .hero .container {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1.2fr 0.8fr; /* metin | görsel */
+    align-items: center;
+  }
+  .content { text-align: left; }
+  .cta { justify-content: start; }
+  .illustration { width: 100%; border-radius: var(--radius); }
+}

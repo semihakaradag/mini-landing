@@ -1,0 +1,48 @@
+.contact { padding: 64px 0; }
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+  h2 { font-size: var(--fs-2xl); margin: 0 0 8px; }
+  p  { color: var(--muted); margin: 0; }
+}
+
+.layout { max-width: 720px; margin: 0 auto; }
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.label {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.textarea {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+  background: color-mix(in oklab, var(--bg) 98%, #fff 2%);
+  color: var(--text);
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.checkbox {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.actions { margin-top: 6px; }
+
+.error {
+  color: #e73d3d;   /* erişilebilir kırmızı */
+  font-size: var(--fs-sm);
+}

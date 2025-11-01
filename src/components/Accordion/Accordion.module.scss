@@ -1,0 +1,90 @@
+.accordion {
+  display: grid;
+  gap: 12px;
+}
+
+.item {
+  border: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in oklab, var(--bg) 98%, #fff 2%);
+}
+
+.header { margin: 0; }
+
+.trigger {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: var(--fs-lg);
+  cursor: pointer;
+   appearance: none;             /* tarayıcı varsayılan ikonlarını kaldırır */
+  list-style: none; 
+}
+.trigger svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+   margin-left: auto; 
+}
+
+
+.trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+.icon {
+  transition: transform .2s ease;
+}
+.iconOpen { transform: rotate(180deg); }
+
+.panel {
+  overflow: hidden;            /* içerik taşmasın */
+  padding: 0 16px;             /* kapalıyken alt padding yok */
+  color: var(--muted);
+  font-size: var(--fs-md);
+
+  max-height: 0;               /* kapalı */
+  opacity: 0;
+  transition: max-height .30s ease, opacity .20s ease, padding .30s ease;
+}
+
+/* özgüllük için .panel.open/.panel.closed kullanıyoruz */
+.panel.open {
+  padding: 0 16px 12px;        /* açıkken alt padding */
+  max-height: 1000px;          /* içeriği fazlasıyla karşılayacak bir tavan */
+  opacity: 1;
+}
+
+.panel.closed {
+  padding: 0 16px;
+  max-height: 0 !important;
+  opacity: 0;
+}
+
+/* (opsiyonel) hareket azalt tercihine saygı */
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; }
+}
+/* Güvenli tarafta kal: hiçbir yerde madde imi göstermeyelim */
+.accordion,
+.accordion * {
+  list-style: none;
+}
+
+
+
+/* Her ihtimale karşı marker'ı tamamen kapat */
+.item::marker,
+.header::marker,
+.trigger::marker {
+  content: none;
+}

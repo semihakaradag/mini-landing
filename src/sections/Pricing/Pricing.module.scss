@@ -1,0 +1,47 @@
+.pricing { padding: 64px 0; }
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  h2 { font-size: var(--fs-2xl); margin: 0 0 8px; }
+  p  { color: var(--muted); margin: 0; }
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr;
+  @media (min-width: 641px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1025px) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.plan { position: relative; }
+
+.price {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 6px 0 10px;
+}
+
+.perks {
+  margin: 0 0 12px;
+  padding: 0 0 0 16px;
+  color: var(--text);
+  li { margin: 4px 0; }
+}
+
+/* Pro plan vurgusu: Card.module.scss içindeki .card'a dışarıdan stil vermek için :global */
+.featured :global(.card) {
+  outline: 2px solid var(--primary);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.badge {
+  position: absolute;
+  top: -10px; right: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-size: var(--fs-sm);
+  padding: 4px 8px;
+  border-radius: 999px;
+}

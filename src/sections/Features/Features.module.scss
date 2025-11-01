@@ -1,0 +1,22 @@
+.features { padding: 64px 0; }
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h2 { font-size: var(--fs-2xl); margin: 0 0 8px; }
+  p  { color: var(--muted); margin: 0; }
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr;              /* ≤640 */
+
+  @media (min-width: 641px) {
+    grid-template-columns: repeat(2, 1fr); /* 641–1024 */
+  }
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(3, 1fr); /* ≥1025 */
+  }
+}
