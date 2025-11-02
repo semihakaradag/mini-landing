@@ -1,15 +1,35 @@
 .accordion {
   display: grid;
-  gap: 12px;
+  gap: 16px;
+  width: 100%;
+  
+  margin-inline: auto;
 }
 
 .item {
   border: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: color-mix(in oklab, var(--bg) 98%, #fff 2%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  transition: all 0.35s ease;
+
+  /* Açıldığında hafif mavi parlama efekti */
+  &.open {
+    background: linear-gradient(
+      to bottom right,
+      rgba(219, 234, 254, 0.9),
+      rgba(191, 219, 254, 0.8)
+    );
+    border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+    transform: scale(1.01);
+  }
 }
 
-.header { margin: 0; }
+.header {
+  margin: 0;
+}
 
 .trigger {
   width: 100%;
@@ -24,67 +44,69 @@
   color: var(--text);
   font-size: var(--fs-lg);
   cursor: pointer;
-   appearance: none;             /* tarayıcı varsayılan ikonlarını kaldırır */
+  appearance: none;
   list-style: none; 
-}
-.trigger svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-   margin-left: auto; 
-}
 
 
+  &:hover {
+    color: var(--primary);
+  }
+}
+/* Klavye ile gezinirken görünür odak stili */
 .trigger:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+  outline: none;
   border-radius: var(--radius);
+  box-shadow:
+    0 0 0 2px color-mix(in oklab, var(--primary) 60%, transparent),
+    0 0 8px rgba(59, 130, 246, 0.4); /* hafif mavi glow */
+  background: color-mix(in oklab, var(--primary) 6%, transparent);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.icon {
-  transition: transform .2s ease;
+
+.trigger svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
 }
-.iconOpen { transform: rotate(180deg); }
+
+.iconOpen {
+  transform: rotate(180deg);
+}
 
 .panel {
-  overflow: hidden;            /* içerik taşmasın */
-  padding: 0 16px;             /* kapalıyken alt padding yok */
+  overflow: hidden;
+  padding: 0 20px;
   color: var(--muted);
   font-size: var(--fs-md);
+  line-height: 1.5;
 
-  max-height: 0;               /* kapalı */
+  max-height: 0;
   opacity: 0;
-  transition: max-height .30s ease, opacity .20s ease, padding .30s ease;
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
 }
 
-/* özgüllük için .panel.open/.panel.closed kullanıyoruz */
 .panel.open {
-  padding: 0 16px 12px;        /* açıkken alt padding */
-  max-height: 1000px;          /* içeriği fazlasıyla karşılayacak bir tavan */
+  padding: 0 20px 16px;
+  max-height: 1000px;
   opacity: 1;
+  animation: fadeIn 0.5s ease;
 }
 
 .panel.closed {
-  padding: 0 16px;
+  padding: 0 20px;
   max-height: 0 !important;
   opacity: 0;
 }
 
-/* (opsiyonel) hareket azalt tercihine saygı */
-@media (prefers-reduced-motion: reduce) {
-  .panel { transition: none; }
-}
-/* Güvenli tarafta kal: hiçbir yerde madde imi göstermeyelim */
-.accordion,
-.accordion * {
-  list-style: none;
-}
-
-
-
-/* Her ihtimale karşı marker'ı tamamen kapat */
-.item::marker,
-.header::marker,
-.trigger::marker {
-  content: none;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

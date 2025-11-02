@@ -41,7 +41,7 @@ export default function Accordion({
         const open = isOpen(id);
 
         return (
-          <li key={id} className={styles.item}>
+          <li key={id} className={`${styles.item} ${open ? styles.open : ''}`}>
             <h3 className={styles.header}>
               <button
                 id={buttonId}

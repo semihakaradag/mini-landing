@@ -6,7 +6,7 @@ import Card from '../../components/Card/Card';
 import Modal from '../../components/Modal/Modal';
 import Success from '../../components/Success/Success';
 
-type Errors = Partial<Record<'name' | 'email' | 'message' | 'terms', string>>;
+type Errors = Partial<Record<'name' | 'email' | 'terms', string>>; // message kaldırıldı
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -17,15 +17,14 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
-  // basit e-posta kontrolü
   const emailRegex = useMemo(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/, []);
 
+  // Mesaj OPSİYONEL -> validate'ten çıkarıldı
   const validate = (): Errors => {
     const e: Errors = {};
     if (!name.trim()) e.name = 'Ad soyad zorunludur.';
     if (!email.trim()) e.email = 'E-posta zorunludur.';
     else if (!emailRegex.test(email)) e.email = 'Geçerli bir e-posta girin.';
-    if (!message.trim()) e.message = 'Mesaj zorunludur.';
     if (!terms) e.terms = 'Koşulları onaylamalısınız.';
     return e;
   };
@@ -35,9 +34,7 @@ export default function Contact() {
     const v = validate();
     setErrors(v);
     if (Object.keys(v).length === 0) {
-      // yalancı submit: gerçek gönderim yok
       setSubmitted(true);
-      // formu sıfırla
       setName('');
       setEmail('');
       setMessage('');
@@ -50,18 +47,21 @@ export default function Contact() {
       <div className="container">
         <header className={styles.header}>
           <h2 id="contact-title">İletişim</h2>
-          <p>Form yalancı olarak gönderilir; yalnızca doğrulama gösterilir.</p>
+          <p>Bizimle iletişime Her Daim İletişime Geçebilirsiniz.</p>
         </header>
 
         <div className={styles.layout}>
+          {/* Card'ı cam/yarı saydam panel gibi göstereceğiz (scss'de :global ile) */}
           <Card title="Bize Yazın">
             <form noValidate onSubmit={onSubmit} className={styles.form} aria-describedby="form-note">
-              <p id="form-note" className="visually-hidden">Tüm alanlar zorunludur.</p>
+              <p id="form-note" className="visually-hidden">
+                Bizimle iletişime Her Daim İletişime Geçebilirsiniz.
+              </p>
 
               <Input
                 id="name"
                 name="name"
-                label="Ad Soyad"
+                label="Ad Soyad "
                 placeholder="Adınız Soyadınız"
                 value={name}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
@@ -80,7 +80,7 @@ export default function Contact() {
                 id="email"
                 name="email"
                 type="email"
-                label="E-posta"
+                label="E-posta "
                 placeholder="ornek@mail.com"
                 value={email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
@@ -95,27 +95,19 @@ export default function Contact() {
                 </span>
               )}
 
-              {/* mesaj: native textarea */}
+              {/* Mesaj: OPSİYONEL */}
               <label htmlFor="message" className={styles.label}>
-                Mesaj
+                Mesaj (opsiyonel)
               </label>
               <textarea
                 id="message"
                 name="message"
                 className={styles.textarea}
-                placeholder="Mesajınızı yazın…"
+                placeholder="Mesajınızı yazın… (opsiyonel)"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                aria-invalid={!!errors.message}
-                aria-describedby={errors.message ? 'err-message' : undefined}
-                rows={5}
-                required
+                rows={6}
               />
-              {errors.message && (
-                <span id="err-message" role="alert" className={styles.error}>
-                  {errors.message}
-                </span>
-              )}
 
               <label className={styles.checkbox}>
                 <input
@@ -143,11 +135,8 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Yalancı submit sonucu */}
       <Modal open={submitted} title="Teşekkürler" onClose={() => setSubmitted(false)} aria-live="polite">
-        <Success
-          text="Formunuz başarıyla alındı (yalancı gönderim). En kısa sürede dönüş yapılacak."
-         />
+        <Success text="Formunuz (yalancı gönderim) alındı. En kısa sürede dönüş yapılacak." />
       </Modal>
     </section>
   );

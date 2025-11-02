@@ -1,0 +1,107 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  transition: transform .28s ease, opacity .2s ease;
+  will-change: transform;
+  backdrop-filter: saturate(150%) blur(10px);
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+}
+.isHidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none; 
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  gap: 16px;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: clamp(18px, 2.2vw, 22px);
+
+  span {
+    color: var(--primary);
+  }
+}
+
+.menuBtn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+
+  .menuIcon,
+  .menuIcon::before,
+  .menuIcon::after {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin: 0 auto;
+    background: var(--text);
+    border-radius: 2px;
+    position: relative;
+  }
+  .menuIcon::before { top: -6px; position: relative; }
+  .menuIcon::after  { top:  4px; position: relative; }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  a, .themeBtn {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+  a:hover, .themeBtn:hover {
+    background: color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+
+  .themeBtn {
+    border: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
+    background: color-mix(in oklab, var(--bg) 90%, #fff 10%);
+    cursor: pointer;
+  }
+}
+
+/* Mobil menü */
+@media (max-width: 720px) {
+  .menuBtn { display: inline-flex; align-items: center; justify-content: center; }
+
+  .nav {
+    position: absolute;
+    inset: 64px 0 auto 0;
+    display: grid;
+    gap: 6px;
+    padding: 10px;
+    background: var(--bg);
+    border-bottom: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

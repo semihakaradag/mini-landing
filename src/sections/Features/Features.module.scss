@@ -1,22 +1,106 @@
-.features { padding: 64px 0; }
+.features {
+  padding: 80px 0;
+  background: linear-gradient(to bottom, color-mix(in oklab, var(--bg) 98%, #fff 2%), var(--bg));
+  position: relative;
+}
 
 .header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 56px;
 
-  h2 { font-size: var(--fs-2xl); margin: 0 0 8px; }
-  p  { color: var(--muted); margin: 0; }
+  h2 {
+    font-size: var(--fs-2xl);
+    margin: 0 0 10px;
+     background: linear-gradient(90deg, #3b82f6, #3b82f6);  
+    background-clip: text; 
+    -webkit-text-fill-color: transparent;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: var(--fs-md);
+    margin: 0;
+  }
 }
 
 .grid {
   display: grid;
-  gap: var(--gap);
-  grid-template-columns: 1fr;              /* ≤640 */
+  gap: 32px;
+  grid-template-columns: 1fr;
 
   @media (min-width: 641px) {
-    grid-template-columns: repeat(2, 1fr); /* 641–1024 */
+    grid-template-columns: repeat(2, 1fr);
   }
+
   @media (min-width: 1025px) {
-    grid-template-columns: repeat(3, 1fr); /* ≥1025 */
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* 🎆 Kart efektleri */
+.grid > div {
+  border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+  border-radius: 16px;
+  padding: 28px;
+  background: color-mix(in oklab, var(--bg) 95%, #fff 5%);
+  box-shadow: 0 0 0 0 transparent;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+
+  cursor: pointer;
+}
+
+.grid > div:hover {
+  transform: translateY(-10px) scale(1.03);
+  background: color-mix(in oklab, var(--primary) 10%, var(--bg) 90%);
+  border-color: color-mix(in oklab, var(--primary) 80%, transparent);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ⚡ Kenarlık animasyonu */
+.grid > div::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--primary), #22c55e);
+ mask:
+  linear-gradient(#fff 0 0) content-box,
+  linear-gradient(#fff 0 0);     /* Standart */
+-webkit-mask:
+  linear-gradient(#fff 0 0) content-box,
+  linear-gradient(#fff 0 0);     /* Safari/Chrome */
+mask-composite: exclude;
+-webkit-mask-composite: xor;     /* Safari/Chrome */
+
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.grid > div:hover::before {
+  opacity: 0.7;
+}
+
+/* Başlık ve açıklama stilleri */
+.grid h3 {
+  font-size: var(--fs-lg);
+  color: var(--text);
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.grid p {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: var(--fs-md);
+  margin: 0;
+}
+
+.grid > div:hover h3 {
+  color: var(--primary);
 }

@@ -27,7 +27,12 @@ export default function Features() {
 
         <div className={styles.grid}>
           {items.map((it) => (
-            <Card key={it.title} title={it.title} desc={it.desc} />
+            <Card
+      key={it.title}
+      title={it.title}
+      desc={it.desc}
+      variant="feature" 
+    />
           ))}   
         </div>
       </div>

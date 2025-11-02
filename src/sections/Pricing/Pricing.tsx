@@ -1,21 +1,28 @@
-import Card from '../../components/Card/Card';
-import Button from '../../components/Button/Button';
-import styles from './Pricing.module.scss';
-
-type Plan = {
-  name: string;
-  price: string;
-  perks: string[];
-  featured?: boolean;
-};
-
-const plans: Plan[] = [
-  { name: 'Basic', price: '₺0 / ay',   perks: ['1 proje', 'Temel bileşenler', 'E-posta desteği'] },
-  { name: 'Pro',   price: '₺149 / ay', perks: ['Sınırsız proje', 'Gelişmiş bileşenler', 'Öncelikli destek'], featured: true },
-  { name: 'Team',  price: '₺399 / ay', perks: ['Takım işbirliği', 'Roller & yetkiler', 'Öncelikli destek'] },
-];
+import Button from "../../components/Button/Button";
+import styles from "./Pricing.module.scss";
 
 export default function Pricing() {
+  const plans = [
+    {
+      title: "Basic",
+      price: "₺0 / ay",
+      features: ["1 proje", "Temel bileşenler", "E-posta desteği"],
+      recommended: false,
+    },
+    {
+      title: "Pro",
+      price: "₺149 / ay",
+      features: ["Sınırsız proje", "Gelişmiş bileşenler", "Öncelikli destek"],
+      recommended: true,
+    },
+    {
+      title: "Team",
+      price: "₺399 / ay",
+      features: ["Takım işbirliği", "Roller & yetkiler", "Öncelikli destek"],
+      recommended: false,
+    },
+  ];
+
   return (
     <section id="pricing" className={styles.pricing} aria-labelledby="pricing-title">
       <div className="container">
@@ -25,22 +32,23 @@ export default function Pricing() {
         </header>
 
         <div className={styles.grid}>
-          {plans.map((p) => (
-            <article
-              key={p.name}
-              className={[styles.plan, p.featured ? styles.featured : ''].filter(Boolean).join(' ')}
-              aria-label={`${p.name} planı`}
+          {plans.map((plan) => (
+            <div
+              key={plan.title}
+              className={`${styles.card} ${plan.recommended ? styles.recommended : ""}`}
             >
-              <Card title={p.name}>
-                <div className={styles.price} aria-label={`Fiyat ${p.price}`}>{p.price}</div>
-                <ul className={styles.perks}>
-                  {p.perks.map((perk) => <li key={perk}>{perk}</li>)}
-                </ul>
-                <Button full size="lg" aria-label={`${p.name} planıyla başla`}>Başla</Button>
-              </Card>
-
-              {p.featured && <span className={styles.badge} aria-hidden="true">Önerilen</span>}
-            </article>
+              <h3>{plan.title}</h3>
+              <p className={styles.price}>{plan.price}</p>
+              <ul>
+                {plan.features.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+              <Button size="lg" full>
+                Başla
+              </Button>
+              {plan.recommended && <span className={styles.badge}>Önerilen</span>}
+            </div>
           ))}
         </div>
       </div>

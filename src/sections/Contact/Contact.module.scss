@@ -1,48 +1,124 @@
-.contact { padding: 64px 0; }
+/* Hero & Pricing ile uyumlu mavi arka plan + glow */
+.contact {
+  position: relative;
+  padding: 50px 0 70px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, #3b82f6 12%, #60a5fa 12%) 0%,
+    color-mix(in oklab, var(--bg) 96%, #e6f1ff 8%) 45%,
+    var(--bg) 100%
+  );
 
-.header {
-  text-align: center;
-  margin-bottom: 24px;
-  h2 { font-size: var(--fs-2xl); margin: 0 0 8px; }
-  p  { color: var(--muted); margin: 0; }
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(900px 420px at 18% 8%, rgba(59,130,246,.18), transparent 70%),
+      radial-gradient(700px 360px at 82% 18%, rgba(96,165,250,.14), transparent 75%);
+    filter: blur(60px);
+    opacity: .9;
+    animation: floatBg 14s ease-in-out infinite alternate;
+  }
 }
 
-.layout { max-width: 720px; margin: 0 auto; }
+/* Başlık tipografisi */
+.header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 40px;
 
+  h2 {
+    font-size: clamp(28px, 4.2vw, var(--fs-2xl));
+    margin: 0 0 10px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  p { color: var(--muted); margin: 0; }
+}
+
+/* Form panelini genişlet ve ortaya al */
+.layout {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  padding-inline: clamp(12px, 2vw, 16px);
+
+  /* Card bileşenini cam panel gibi göster (CSS Modules -> :global) */
+  :global(article) {
+    border-radius: 20px;
+    border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+    background: color-mix(in oklab, var(--bg) 75%, rgba(255,255,255,.35));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 60px rgba(59,130,246,.12);
+  }
+}
+
+/* Form */
 .form {
   display: grid;
-  gap: 10px;
+  gap: 14px;
+  font-feature-settings: "cv02","cv03","cv04"; /* daha düzgün metin akışı */
 }
 
 .label {
-  font-size: var(--fs-sm);
-  color: var(--muted);
+  font-size: clamp(13px, 1.6vw, var(--fs-sm));
+  color: color-mix(in oklab, var(--text) 88%, #000 12%);
+  font-weight: 600;
+  letter-spacing: .2px;
 }
 
+/* Textarea, Input ile aynı görsel dil */
 .textarea {
   width: 100%;
-  border-radius: var(--radius);
+  border-radius: 12px;
   border: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
   background: color-mix(in oklab, var(--bg) 98%, #fff 2%);
   color: var(--text);
-  padding: 10px 12px;
+  padding: 12px 14px;
+  line-height: 1.5;
   resize: vertical;
+  transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
 }
-
 .textarea:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+  outline: none;
+  border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 30%, transparent);
+  background: color-mix(in oklab, var(--bg) 96%, #fff 4%);
 }
 
+/* Checkbox */
 .checkbox {
-  display: flex; align-items: center; gap: 8px;
-  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(13px, 1.6vw, var(--fs-sm));
   color: var(--text);
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+  }
 }
 
-.actions { margin-top: 6px; }
+/* Buton alanı */
+.actions { margin-top: 10px; }
 
+/* Hata metni */
 .error {
-  color: #e73d3d;   /* erişilebilir kırmızı */
+  color: #e73d3d;
   font-size: var(--fs-sm);
+}
+
+/* Arka plan yüzen glow animasyonu */
+@keyframes floatBg {
+  0%   { transform: translateY(0) scale(1); }
+  50%  { transform: translateY(-14px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
 }

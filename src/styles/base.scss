@@ -23,3 +23,9 @@ html, body {
   outline-offset: 3px;
 }
 
+:root {
+  --header-h: 64px; 
+}
+
+
+html { scroll-behavior: smooth; }
